@@ -1,15 +1,9 @@
 package com.example.aviation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 @Table(name = "gates")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Gate {
 
     @Id
@@ -17,9 +11,42 @@ public class Gate {
     private Long id;
 
     @Column(nullable = false)
-    private String name; // e.g. A12, B3
+    private String name;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "airport_id")
     private Airport airport;
+
+    public Gate() {
+    }
+
+    public Gate(Long id, String name, Airport airport) {
+        this.id = id;
+        this.name = name;
+        this.airport = airport;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Airport getAirport() {
+        return airport;
+    }
+
+    public void setAirport(Airport airport) {
+        this.airport = airport;
+    }
 }

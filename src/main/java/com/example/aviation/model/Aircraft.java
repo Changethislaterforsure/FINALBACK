@@ -1,15 +1,9 @@
 package com.example.aviation.model;
 
 import jakarta.persistence.*;
-import lombok.*;
 
 @Entity
 @Table(name = "aircraft")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Aircraft {
 
     @Id
@@ -17,7 +11,40 @@ public class Aircraft {
     private Long id;
 
     @Column(nullable = false)
-    private String model; 
+    private String model;
 
     private Integer capacity;
+
+    public Aircraft() {
+    }
+
+    public Aircraft(Long id, String model, Integer capacity) {
+        this.id = id;
+        this.model = model;
+        this.capacity = capacity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 }

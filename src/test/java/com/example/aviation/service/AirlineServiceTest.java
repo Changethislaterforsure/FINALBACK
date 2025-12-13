@@ -26,10 +26,17 @@ class AirlineServiceTest {
 
     @Test
     void getAllAirlines_returnsList() {
-        when(airlineRepository.findAll()).thenReturn(List.of(
-                Airline.builder().id(1L).code("AC").name("Air Canada").build(),
-                Airline.builder().id(2L).code("WS").name("WestJet").build()
-        ));
+        Airline a1 = new Airline();
+        a1.setId(1L);
+        a1.setCode("AC");
+        a1.setName("Air Canada");
+
+        Airline a2 = new Airline();
+        a2.setId(2L);
+        a2.setCode("WS");
+        a2.setName("WestJet");
+
+        when(airlineRepository.findAll()).thenReturn(List.of(a1, a2));
 
         List<Airline> result = airlineService.getAllAirlines();
 
@@ -39,7 +46,11 @@ class AirlineServiceTest {
 
     @Test
     void getAirlineByCode_whenFound_returnsAirline() {
-        Airline airline = Airline.builder().id(1L).code("AC").name("Air Canada").build();
+        Airline airline = new Airline();
+        airline.setId(1L);
+        airline.setCode("AC");
+        airline.setName("Air Canada");
+
         when(airlineRepository.findByCode("AC")).thenReturn(Optional.of(airline));
 
         Airline result = airlineService.getAirlineByCode("AC");

@@ -27,10 +27,21 @@ class AirportServiceTest {
 
     @Test
     void getAllAirports_returnsList() {
-        when(airportRepository.findAll()).thenReturn(List.of(
-                Airport.builder().id(1L).code("YYT").name("St. John's").city("St. John's").country("Canada").build(),
-                Airport.builder().id(2L).code("YYZ").name("Toronto Pearson").city("Toronto").country("Canada").build()
-        ));
+        Airport a1 = new Airport();
+        a1.setId(1L);
+        a1.setCode("YYT");
+        a1.setName("St. John's");
+        a1.setCity("St. John's");
+        a1.setCountry("Canada");
+
+        Airport a2 = new Airport();
+        a2.setId(2L);
+        a2.setCode("YYZ");
+        a2.setName("Toronto Pearson");
+        a2.setCity("Toronto");
+        a2.setCountry("Canada");
+
+        when(airportRepository.findAll()).thenReturn(List.of(a1, a2));
 
         List<Airport> result = airportService.getAllAirports();
 
@@ -40,7 +51,11 @@ class AirportServiceTest {
 
     @Test
     void getAirportById_whenFound_returnsAirport() {
-        Airport airport = Airport.builder().id(1L).code("YYT").name("St. John's").build();
+        Airport airport = new Airport();
+        airport.setId(1L);
+        airport.setCode("YYT");
+        airport.setName("St. John's");
+
         when(airportRepository.findById(1L)).thenReturn(Optional.of(airport));
 
         Airport result = airportService.getAirportById(1L);
@@ -59,8 +74,15 @@ class AirportServiceTest {
 
     @Test
     void createAirport_savesAirport() {
-        Airport input = Airport.builder().code("YYT").name("St. John's").build();
-        Airport saved = Airport.builder().id(1L).code("YYT").name("St. John's").build();
+        Airport input = new Airport();
+        input.setCode("YYT");
+        input.setName("St. John's");
+
+        Airport saved = new Airport();
+        saved.setId(1L);
+        saved.setCode("YYT");
+        saved.setName("St. John's");
+
         when(airportRepository.save(any(Airport.class))).thenReturn(saved);
 
         Airport result = airportService.createAirport(input);
@@ -71,8 +93,18 @@ class AirportServiceTest {
 
     @Test
     void updateAirport_updatesFields() {
-        Airport existing = Airport.builder().id(1L).code("OLD").name("Old").city("Old City").country("Old Country").build();
-        Airport updated = Airport.builder().code("YYT").name("St. John's").city("St. John's").country("Canada").build();
+        Airport existing = new Airport();
+        existing.setId(1L);
+        existing.setCode("OLD");
+        existing.setName("Old");
+        existing.setCity("Old City");
+        existing.setCountry("Old Country");
+
+        Airport updated = new Airport();
+        updated.setCode("YYT");
+        updated.setName("St. John's");
+        updated.setCity("St. John's");
+        updated.setCountry("Canada");
 
         when(airportRepository.findById(1L)).thenReturn(Optional.of(existing));
         when(airportRepository.save(any(Airport.class))).thenAnswer(inv -> inv.getArgument(0));

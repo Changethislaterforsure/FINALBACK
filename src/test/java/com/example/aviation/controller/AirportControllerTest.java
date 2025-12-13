@@ -27,9 +27,14 @@ class AirportControllerTest {
 
     @Test
     void getAllAirports_returns200AndList() throws Exception {
-        when(airportService.getAllAirports()).thenReturn(List.of(
-                Airport.builder().id(1L).code("YYT").name("St. John's").city("St. John's").country("Canada").build()
-        ));
+        Airport a = new Airport();
+        a.setId(1L);
+        a.setCode("YYT");
+        a.setName("St. John's");
+        a.setCity("St. John's");
+        a.setCountry("Canada");
+
+        when(airportService.getAllAirports()).thenReturn(List.of(a));
 
         mockMvc.perform(get("/api/airports"))
                 .andExpect(status().isOk())
@@ -39,7 +44,13 @@ class AirportControllerTest {
 
     @Test
     void createAirport_returns201() throws Exception {
-        Airport created = Airport.builder().id(1L).code("YYT").name("St. John's").city("St. John's").country("Canada").build();
+        Airport created = new Airport();
+        created.setId(1L);
+        created.setCode("YYT");
+        created.setName("St. John's");
+        created.setCity("St. John's");
+        created.setCountry("Canada");
+
         when(airportService.createAirport(org.mockito.ArgumentMatchers.any(Airport.class))).thenReturn(created);
 
         mockMvc.perform(post("/api/airports")

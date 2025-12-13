@@ -62,38 +62,43 @@ public class FlightService {
                 .orElseThrow(() -> new NotFoundException("Airline not found with id " + dto.getAirlineId()));
         Aircraft aircraft = aircraftRepository.findById(dto.getAircraftId())
                 .orElseThrow(() -> new NotFoundException("Aircraft not found with id " + dto.getAircraftId()));
+
         Gate gate = null;
         if (dto.getGateId() != null) {
             gate = gateRepository.findById(dto.getGateId())
                     .orElseThrow(() -> new NotFoundException("Gate not found with id " + dto.getGateId()));
         }
-        Flight flight = Flight.builder()
-                .flightNumber(dto.getFlightNumber())
-                .type(dto.getType())
-                .scheduledTime(dto.getScheduledTime())
-                .status(dto.getStatus())
-                .airport(airport)
-                .airline(airline)
-                .aircraft(aircraft)
-                .gate(gate)
-                .build();
+
+        Flight flight = new Flight();
+        flight.setFlightNumber(dto.getFlightNumber());
+        flight.setType(dto.getType());
+        flight.setScheduledTime(dto.getScheduledTime());
+        flight.setStatus(dto.getStatus());
+        flight.setAirport(airport);
+        flight.setAirline(airline);
+        flight.setAircraft(aircraft);
+        flight.setGate(gate);
+
         return flightRepository.save(flight);
     }
 
     public Flight updateFlight(Long id, FlightRequestDto dto) {
         Flight existing = flightRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Flight not found with id " + id));
+
         Airport airport = airportRepository.findById(dto.getAirportId())
                 .orElseThrow(() -> new NotFoundException("Airport not found with id " + dto.getAirportId()));
         Airline airline = airlineRepository.findById(dto.getAirlineId())
                 .orElseThrow(() -> new NotFoundException("Airline not found with id " + dto.getAirlineId()));
         Aircraft aircraft = aircraftRepository.findById(dto.getAircraftId())
                 .orElseThrow(() -> new NotFoundException("Aircraft not found with id " + dto.getAircraftId()));
+
         Gate gate = null;
         if (dto.getGateId() != null) {
             gate = gateRepository.findById(dto.getGateId())
                     .orElseThrow(() -> new NotFoundException("Gate not found with id " + dto.getGateId()));
         }
+
         existing.setFlightNumber(dto.getFlightNumber());
         existing.setType(dto.getType());
         existing.setScheduledTime(dto.getScheduledTime());
@@ -102,6 +107,7 @@ public class FlightService {
         existing.setAirline(airline);
         existing.setAircraft(aircraft);
         existing.setGate(gate);
+
         return flightRepository.save(existing);
     }
 
