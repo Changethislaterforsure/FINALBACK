@@ -7,7 +7,7 @@ on:
     branches: [ "main", "dev" ]
 
 jobs:
-  test:
+  test-and-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,6 @@ jobs:
 
       - name: Run tests
         run: mvn -B test
+
+      - name: Build jar
+        run: mvn -B -DskipTests package
