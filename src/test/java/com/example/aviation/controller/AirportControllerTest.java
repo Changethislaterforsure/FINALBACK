@@ -1,29 +1,47 @@
 package com.example.aviation.controller;
 
-import com.example.aviation.model.Airport;
-import com.example.aviation.service.AirportService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
+import org.mockito.Mock;
 import static org.mockito.Mockito.when;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-@WebMvcTest(AirportController.class)
+import com.example.aviation.model.Airport;
+import com.example.aviation.repository.AirportRepository;
+import com.example.aviation.service.AirportService;
+
+@ExtendWith(MockitoExtension.class)
 class AirportControllerTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
+    private AirportRepository airportRepository;
+
     private AirportService airportService;
+
+    @BeforeEach
+    void setup() {
+        airportService = new AirportService(airportRepository);
+        AirportController controller = new AirportController(airportService);
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setMessageConverters(new MappingJackson2HttpMessageConverter())
+                .build();
+    }
 
     @Test
     void getAllAirports_returns200AndList() throws Exception {
@@ -34,7 +52,7 @@ class AirportControllerTest {
         a.setCity("St. John's");
         a.setCountry("Canada");
 
-        when(airportService.getAllAirports()).thenReturn(List.of(a));
+        when(airportRepository.findAll()).thenReturn(List.of(a));
 
         mockMvc.perform(get("/api/airports"))
                 .andExpect(status().isOk())
@@ -44,19 +62,20 @@ class AirportControllerTest {
 
     @Test
     void createAirport_returns201() throws Exception {
-        Airport created = new Airport();
-        created.setId(1L);
-        created.setCode("YYT");
-        created.setName("St. John's");
-        created.setCity("St. John's");
-        created.setCountry("Canada");
+        Airport saved = new Airport();
+        saved.setId(1L);
+        saved.setCode("YYT");
+        saved.setName("St. John's");
+        saved.setCity("St. John's");
+        saved.setCountry("Canada");
 
-        when(airportService.createAirport(org.mockito.ArgumentMatchers.any(Airport.class))).thenReturn(created);
+        when(airportRepository.save(any(Airport.class))).thenReturn(saved);
 
         mockMvc.perform(post("/api/airports")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"code\":\"YYT\",\"name\":\"St. John's\",\"city\":\"St. John's\",\"country\":\"Canada\"}"))
                 .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.code").value("YYT"));
     }
