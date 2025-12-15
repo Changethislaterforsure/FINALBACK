@@ -18,6 +18,7 @@
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/service/AircraftService.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/repository/AirlineRepository.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/OpenApiConfig.java
+/Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/DataSeeder.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/model/Gate.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/CorsConfig.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/exception/NotFoundException.java

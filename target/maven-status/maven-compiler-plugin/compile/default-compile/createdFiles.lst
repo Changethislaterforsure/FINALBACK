@@ -2,6 +2,7 @@ com/example/aviation/exception/NotFoundException.class
 com/example/aviation/repository/GateRepository.class
 com/example/aviation/service/AirlineService.class
 com/example/aviation/repository/AirportRepository.class
+com/example/aviation/config/DataSeeder.class
 com/example/aviation/controller/GateController.class
 com/example/aviation/service/AircraftService.class
 com/example/aviation/exception/GlobalExceptionHandler.class

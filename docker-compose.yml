@@ -6,9 +6,11 @@ services:
     container_name: aviation-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: aviation_db
+      MYSQL_DATABASE: aviation
+      MYSQL_USER: aviation
+      MYSQL_PASSWORD: aviation
     ports:
-      - "3307:3306"
+      - "3308:3306"
     volumes:
       - db_data:/var/lib/mysql
 
