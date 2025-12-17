@@ -1,13 +1,15 @@
 package com.example.aviation.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.aviation.dto.GateRequest;
 import com.example.aviation.exception.NotFoundException;
 import com.example.aviation.model.Airport;
 import com.example.aviation.model.Gate;
 import com.example.aviation.repository.AirportRepository;
 import com.example.aviation.repository.GateRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class GateService {
@@ -20,42 +22,47 @@ public class GateService {
         this.airportRepository = airportRepository;
     }
 
-    public List<Gate> getAllGates() {
+    public List<Gate> getAll() {
         return gateRepository.findAll();
     }
 
-    public Gate getGateById(Long id) {
+    public Gate getById(Long id) {
         return gateRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Gate not found with id " + id));
+                .orElseThrow(() -> new NotFoundException("Gate not found: " + id));
     }
 
-    public List<Gate> getGatesByAirport(Long airportId) {
+    public List<Gate> getByAirportId(Long airportId) {
         return gateRepository.findByAirportId(airportId);
     }
 
-    public Gate createGate(Long airportId, Gate gate) {
-        Airport airport = airportRepository.findById(airportId)
-                .orElseThrow(() -> new NotFoundException("Airport not found with id " + airportId));
+    public Gate create(GateRequest req) {
+        Airport airport = airportRepository.findById(req.getAirportId())
+                .orElseThrow(() -> new NotFoundException("Airport not found: " + req.getAirportId()));
+
+        Gate gate = new Gate();
+        gate.setCode(req.getCode());
+        gate.setTerminal(req.getTerminal());
         gate.setAirport(airport);
         return gateRepository.save(gate);
     }
 
-    public Gate updateGate(Long id, Gate updated) {
-        Gate existing = gateRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Gate not found with id " + id));
-        existing.setName(updated.getName());
-        if (updated.getAirport() != null && updated.getAirport().getId() != null) {
-            Airport airport = airportRepository.findById(updated.getAirport().getId())
-                    .orElseThrow(() -> new NotFoundException("Airport not found with id " + updated.getAirport().getId()));
+    public Gate update(Long id, GateRequest req) {
+        Gate existing = getById(id);
+
+        if (req.getAirportId() != null) {
+            Airport airport = airportRepository.findById(req.getAirportId())
+                    .orElseThrow(() -> new NotFoundException("Airport not found: " + req.getAirportId()));
             existing.setAirport(airport);
         }
+
+        if (req.getCode() != null) existing.setCode(req.getCode());
+        if (req.getTerminal() != null) existing.setTerminal(req.getTerminal());
+
         return gateRepository.save(existing);
     }
 
-    public void deleteGate(Long id) {
-        if (!gateRepository.existsById(id)) {
-            throw new NotFoundException("Gate not found with id " + id);
-        }
-        gateRepository.deleteById(id);
+    public void delete(Long id) {
+        Gate existing = getById(id);
+        gateRepository.delete(existing);
     }
 }

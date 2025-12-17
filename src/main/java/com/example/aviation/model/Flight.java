@@ -1,38 +1,35 @@
 package com.example.aviation.model;
 
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 @Entity
-@Table(name = "flights")
 public class Flight {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 10)
     private String flightNumber;
-
-    @Column(nullable = false, length = 16)
     private String type;
-
-    @Column(nullable = false)
     private LocalDateTime scheduledTime;
-
-    @Column(nullable = false, length = 32)
     private String status;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "airport_id")
     private Airport airport;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "airline_id")
     private Airline airline;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "aircraft_id")
     private Aircraft aircraft;
 
@@ -40,28 +37,10 @@ public class Flight {
     @JoinColumn(name = "gate_id")
     private Gate gate;
 
-    public Flight() {
-    }
-
-    public Flight(Long id, String flightNumber, String type, LocalDateTime scheduledTime, String status,
-                  Airport airport, Airline airline, Aircraft aircraft, Gate gate) {
-        this.id = id;
-        this.flightNumber = flightNumber;
-        this.type = type;
-        this.scheduledTime = scheduledTime;
-        this.status = status;
-        this.airport = airport;
-        this.airline = airline;
-        this.aircraft = aircraft;
-        this.gate = gate;
-    }
+    public Flight() {}
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFlightNumber() {

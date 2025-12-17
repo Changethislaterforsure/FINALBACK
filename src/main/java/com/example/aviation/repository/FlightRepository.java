@@ -9,10 +9,15 @@ import com.example.aviation.model.Flight;
 
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
-    List<Flight> findByAirportId(Long airportId);
+    List<Flight> findByAirport_Id(Long airportId);
 
-    List<Flight> findByAirportIdAndScheduledTimeBetween(
+    List<Flight> findByAirport_IdAndStatusIgnoreCase(Long airportId, String status);
+
+    List<Flight> findByAirport_IdAndScheduledTimeBetween(Long airportId, LocalDateTime start, LocalDateTime end);
+
+    List<Flight> findByAirport_IdAndStatusIgnoreCaseAndScheduledTimeBetween(
             Long airportId,
+            String status,
             LocalDateTime start,
             LocalDateTime end
     );

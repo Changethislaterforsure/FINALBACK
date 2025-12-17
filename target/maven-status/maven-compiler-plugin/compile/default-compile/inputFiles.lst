@@ -1,5 +1,4 @@
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/service/AirportService.java
-/Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/dto/FlightRequestDto.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/controller/FlightController.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/repository/AircraftRepository.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/controller/AirlineController.java
@@ -18,11 +17,12 @@
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/service/AircraftService.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/repository/AirlineRepository.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/OpenApiConfig.java
-/Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/DataSeeder.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/model/Gate.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/config/CorsConfig.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/exception/NotFoundException.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/repository/AirportRepository.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/exception/GlobalExceptionHandler.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/controller/AirportController.java
+/Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/dto/GateRequest.java
 /Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/model/Airline.java
+/Users/keyin/Desktop/SEM 4 DEV/FINAL/FINALBACK/src/main/java/com/example/aviation/dto/FlightRequest.java

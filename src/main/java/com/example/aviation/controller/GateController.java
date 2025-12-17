@@ -1,16 +1,24 @@
 package com.example.aviation.controller;
 
-import com.example.aviation.model.Gate;
-import com.example.aviation.service.GateService;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.aviation.dto.GateRequest;
+import com.example.aviation.model.Gate;
+import com.example.aviation.service.GateService;
 
 @RestController
 @RequestMapping("/api/gates")
-@CrossOrigin(origins = "*")
 public class GateController {
 
     private final GateService gateService;
@@ -20,35 +28,33 @@ public class GateController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Gate>> getAllGates() {
-        return ResponseEntity.ok(gateService.getAllGates());
+    public ResponseEntity<List<Gate>> getAll() {
+        return ResponseEntity.ok(gateService.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Gate> getGateById(@PathVariable Long id) {
-        return ResponseEntity.ok(gateService.getGateById(id));
+    public ResponseEntity<Gate> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(gateService.getById(id));
     }
 
     @GetMapping("/airport/{airportId}")
-    public ResponseEntity<List<Gate>> getGatesByAirport(@PathVariable Long airportId) {
-        return ResponseEntity.ok(gateService.getGatesByAirport(airportId));
+    public ResponseEntity<List<Gate>> getByAirport(@PathVariable Long airportId) {
+        return ResponseEntity.ok(gateService.getByAirportId(airportId));
     }
 
-    @PostMapping("/airport/{airportId}")
-    public ResponseEntity<Gate> createGateForAirport(@PathVariable Long airportId, @RequestBody Gate gate) {
-        Gate created = gateService.createGate(airportId, gate);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    @PostMapping
+    public ResponseEntity<Gate> create(@RequestBody GateRequest req) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(gateService.create(req));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Gate> updateGate(@PathVariable Long id, @RequestBody Gate gate) {
-        Gate updated = gateService.updateGate(id, gate);
-        return ResponseEntity.ok(updated);
+    public ResponseEntity<Gate> update(@PathVariable Long id, @RequestBody GateRequest req) {
+        return ResponseEntity.ok(gateService.update(id, req));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGate(@PathVariable Long id) {
-        gateService.deleteGate(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        gateService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

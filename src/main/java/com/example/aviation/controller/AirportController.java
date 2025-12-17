@@ -1,22 +1,34 @@
 package com.example.aviation.controller;
 
-import com.example.aviation.model.Airport;
-import com.example.aviation.service.AirportService;
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.example.aviation.model.Airport;
+import com.example.aviation.service.AirportService;
 
 @RestController
 @RequestMapping("/api/airports")
-@CrossOrigin(origins = "*")
 public class AirportController {
 
     private final AirportService airportService;
 
     public AirportController(AirportService airportService) {
         this.airportService = airportService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Airport> createAirport(@RequestBody Airport airport) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(airportService.createAirport(airport));
     }
 
     @GetMapping
@@ -34,16 +46,9 @@ public class AirportController {
         return ResponseEntity.ok(airportService.getAirportByCode(code));
     }
 
-    @PostMapping
-    public ResponseEntity<Airport> createAirport(@RequestBody Airport airport) {
-        Airport created = airportService.createAirport(airport);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Airport> updateAirport(@PathVariable Long id, @RequestBody Airport airport) {
-        Airport updated = airportService.updateAirport(id, airport);
-        return ResponseEntity.ok(updated);
+        return ResponseEntity.ok(airportService.updateAirport(id, airport));
     }
 
     @DeleteMapping("/{id}")

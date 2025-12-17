@@ -1,6 +1,10 @@
 package com.example.aviation.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "airlines")
@@ -10,20 +14,8 @@ public class Airline {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 8)
-    private String code;
-
-    @Column(nullable = false)
     private String name;
-
-    public Airline() {
-    }
-
-    public Airline(Long id, String code, String name) {
-        this.id = id;
-        this.code = code;
-        this.name = name;
-    }
+    private String code;
 
     public Long getId() {
         return id;
@@ -33,19 +25,19 @@ public class Airline {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

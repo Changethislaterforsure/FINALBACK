@@ -1,52 +1,37 @@
 package com.example.aviation.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name = "gates")
 public class Gate {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    private String code;
+    private String terminal;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "airport_id")
     private Airport airport;
 
-    public Gate() {
-    }
+    public Gate() {}
 
-    public Gate(Long id, String name, Airport airport) {
-        this.id = id;
-        this.name = name;
-        this.airport = airport;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getCode() { return code; }
+    public void setCode(String code) { this.code = code; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getTerminal() { return terminal; }
+    public void setTerminal(String terminal) { this.terminal = terminal; }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Airport getAirport() {
-        return airport;
-    }
-
-    public void setAirport(Airport airport) {
-        this.airport = airport;
-    }
+    public Airport getAirport() { return airport; }
+    public void setAirport(Airport airport) { this.airport = airport; }
 }
